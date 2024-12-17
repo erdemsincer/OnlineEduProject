@@ -62,6 +62,7 @@ namespace OnlineEdu.DataAccess.Repositories
         public void Update(T entity)
         {
            Table.Update(entity);
+            _context.SaveChanges();
         }
     }
 }
