@@ -1,14 +1,61 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineEdu.WebUI.Dtos.AboutDto;
+using OnlineEdu.WebUI.Helpers;
 
 namespace OnlineEdu.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("[area]/[controller]/[action]/{id?}")]
-    public class AboutController(HttpClient _client) : Controller
+    public class  AboutController: Controller
     {
-        public IActionResult Index()
-        { 
+        private readonly HttpClient _client= HttpClientInstance.CreateClient();
+        public async Task<IActionResult> Index()
+        {
+            var values = await _client.GetFromJsonAsync<List<ResultAboutDto>>("abouts");
+            return View(values);
+        }
+
+        public async Task<IActionResult> DeleteAbout(int id)
+        {
+            try
+            {
+                var response = await _client.DeleteAsync($"abouts/{id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    return View("Error", $"Silme işlemi başarısız oldu. Durum: {response.StatusCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                return View("Error", ex.Message);
+            }
+        }
+
+        public IActionResult CreateAbout()
+        {
             return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateAbout(CreateAboutDto createAboutDto)
+        {
+            await _client.PostAsJsonAsync("abouts", createAboutDto);
+            return RedirectToAction(nameof(Index));
+        }
+        public async Task<IActionResult> UpdateAbout(int id)
+        {
+            var values = await _client.GetFromJsonAsync<UpdateAboutDto>($"abouts/{id}");
+            return View(values);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateAbout(UpdateAboutDto updateAboutDto)
+        {
+            await _client.PutAsJsonAsync("abouts", updateAboutDto);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
