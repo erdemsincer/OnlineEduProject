@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineEdu.WebUI.DTOs.CourseCategoryDtos
+namespace OnlineEdu.WebUI.Dtos.CourseCategoryDtos
 {
     public class ResultCourseCategoryDto
     {

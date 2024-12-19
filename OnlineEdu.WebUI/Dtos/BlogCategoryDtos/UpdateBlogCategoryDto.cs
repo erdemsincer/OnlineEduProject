@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineEdu.WebUI.DTOs.BlogCategoryDtos
+namespace OnlineEdu.WebUI.Dtos.BlogCategoryDtos
 {
     public class UpdateBlogCategoryDto
     {

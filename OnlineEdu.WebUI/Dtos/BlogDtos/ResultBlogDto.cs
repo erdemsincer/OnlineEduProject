@@ -1,12 +1,13 @@
 ﻿
-using OnlineEdu.WebUI.DTOs.BlogCategoryDtos;
+using OnlineEdu.WebUI.Dtos.BlogCategoryDtos;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineEdu.WebUI.DTOs.BlogDtos
+namespace OnlineEdu.WebUI.Dtos.BlogDtos
 {
     public class ResultBlogDto
     {
