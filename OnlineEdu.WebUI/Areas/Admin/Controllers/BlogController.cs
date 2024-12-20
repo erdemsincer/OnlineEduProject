@@ -33,7 +33,7 @@ namespace OnlineEdu.WebUI.Areas.Admin.Controllers
 
         public async Task<IActionResult> DeleteBlog(int id)
         {
-            await _client.DeleteAsync($"blogS/{id}");
+            await _client.DeleteAsync($"blogs/{id}");
             return RedirectToAction("Index");
         }
         [HttpGet]

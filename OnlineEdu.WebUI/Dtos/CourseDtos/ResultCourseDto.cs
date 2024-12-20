@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineEdu.WebUI.DTOs.CourseDtos
+namespace OnlineEdu.WebUI.Dtos.CourseDtos
 {
     public class ResultCourseDto
     {
