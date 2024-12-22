@@ -66,13 +66,31 @@ namespace OnlineEdu.WebUI.Areas.Admin.Controllers
             var values = await _client.GetFromJsonAsync<UpdateCourseDto>($"courses/{id}");
             return View(values);
         }
-
         [HttpPost]
         public async Task<IActionResult> UpdateCourse(UpdateCourseDto updateCourseDto)
         {
-            await _client.PutAsJsonAsync("courses", updateCourseDto);
-            return RedirectToAction(nameof(Index));
+            if (updateCourseDto == null || updateCourseDto.CourseId == 0)
+            {
+                TempData["ErrorMessage"] = "Güncelleme için geçersiz veri.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            var response = await _client.PutAsJsonAsync("courses", updateCourseDto);
+
+            if (response.IsSuccessStatusCode)
+            {
+                TempData["SuccessMessage"] = "Kurs başarıyla güncellendi.";
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Güncelleme işlemi başarısız oldu.";
+                return RedirectToAction(nameof(Index));
+            }
         }
+
+
+
 
         public async Task<IActionResult> ShowOnHome(int id)
         {

@@ -13,30 +13,16 @@ namespace OnlineEdu.DataAccess.Concrete
 
         public void DontShowOnHome(int id)
         {
-            var value = _context.CourseCategories.Find(id);
-            if (value != null)
-            {
-                value.IsShown = false;
-                _context.SaveChanges();
-            }
-            else
-            {
-                throw new ArgumentException($"ID {id} ile eşleşen kategori bulunamadı.");
-            }
+            var values = _context.CourseCategories.Find(id);
+            values.IsShown = false;
+            _context.SaveChanges();
         }
 
         public void ShowOnHome(int id)
         {
-            var value = _context.CourseCategories.Find(id);
-            if (value != null)
-            {
-                value.IsShown = true;
-                _context.SaveChanges();
-            }
-            else
-            {
-                throw new ArgumentException($"ID {id} ile eşleşen kategori bulunamadı.");
-            }
+            var values = _context.CourseCategories.Find(id);
+            values.IsShown = false;
+            _context.SaveChanges();
         }
     }
 }
