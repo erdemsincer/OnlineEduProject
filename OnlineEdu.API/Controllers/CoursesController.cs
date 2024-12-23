@@ -64,5 +64,13 @@ namespace OnlineEdu.API.Controllers
             return Ok("Ana Sayfada Gösterilmiyor");
         }
 
+        [HttpGet("GetActiveCourses")]
+
+        public IActionResult GetActiveCourse()
+        {
+            var values =_courseService.TGetFilteredList(x=>x.IsShown==true);
+            return Ok(values);
+        }
+
     }
 }

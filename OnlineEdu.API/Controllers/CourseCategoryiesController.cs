@@ -64,5 +64,14 @@
                 return Ok("Ana Sayfada Gösterilmiyor");
             }
 
+            [HttpGet("GetActiveCategories")]
+
+            public IActionResult GetActiveCategories()
+            {
+               var values=_courseCategoryService.TGetFilteredList(x=>x.IsShown==true);
+               return Ok(values);
+            }
+
+
         }
     }
