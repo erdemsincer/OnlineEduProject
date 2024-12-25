@@ -19,15 +19,18 @@ namespace OnlineEdu.WebUI.Services
                 LastName = userRegisterDto.LastName,
                 UserName = userRegisterDto.UserName,
                 Email = userRegisterDto.Email,
-
-
             };
-            if (userRegisterDto.Password  != userRegisterDto.ConfirmPassword)
+
+            if (userRegisterDto.Password != userRegisterDto.ConfirmPassword)
             {
-                return new IdentityResult();
-               
+                return IdentityResult.Failed(new IdentityError
+                {
+                    Code = "PasswordMismatch",
+                    Description = "Şifreler uyuşmuyor."
+                });
             }
-            return await _userManager.CreateAsync(user,userRegisterDto.Password);
+
+            return await _userManager.CreateAsync(user, userRegisterDto.Password);
 
         }
 

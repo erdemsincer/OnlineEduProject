@@ -4,27 +4,41 @@ using OnlineEdu.WebUI.Services;
 
 namespace OnlineEdu.WebUI.Controllers
 {
-    public class RegisterController(IUserService userService) : Controller
+    public class RegisterController : Controller
     {
+        private readonly IUserService _userService;
+
+        public RegisterController(IUserService userService)
+        {
+            _userService = userService;
+        }
+
         [HttpGet]
         public IActionResult SignUp()
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> SignUp(UserRegisterDto userRegisterDto)
         {
-            var result=await userService.CreateUserAsync(userRegisterDto);
-            if (result.Succeeded || !ModelState.IsValid)
+            if (!ModelState.IsValid)
+            {
+                return View(userRegisterDto); // Model doğrulama hatalarını tekrar göster
+            }
+
+            var result = await _userService.CreateUserAsync(userRegisterDto);
+            if (!result.Succeeded)
             {
                 foreach (var item in result.Errors)
                 {
-                    ModelState.AddModelError(item.Code, item.Description);
-                        
+                    ModelState.AddModelError("", item.Description); // Hata mesajlarını göster
                 }
-                return View();
+                return View(userRegisterDto);
             }
-            return RedirectToAction("Index","Login");
+
+            TempData["SuccessMessage"] = "Kayıt işlemi başarıyla tamamlandı.";
+            return RedirectToAction("Index", "Login");
         }
     }
 }
