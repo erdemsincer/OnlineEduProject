@@ -10,9 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
-builder.Services.AddScoped<IUserService,UserService>();
-builder.Services.AddScoped<IRoleService,RoleService>();
-builder.Services.AddIdentity<AppUser,AppRole>().AddEntityFrameworkStores<OnlineEduContext>().AddErrorDescriber<CustomErrorDescriber>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddIdentity<AppUser, AppRole>()
+    .AddEntityFrameworkStores<OnlineEduContext>()
+    .AddErrorDescriber<CustomErrorDescriber>();
+
 builder.Services.AddHttpClient();
 builder.Services.AddControllersWithViews();
 
@@ -20,13 +23,20 @@ builder.Services.AddDbContext<OnlineEduContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection"));
 });
+
+builder.Services.ConfigureApplicationCookie(cfg =>
+{
+    cfg.LoginPath = "/Login/SignIn";
+    cfg.LogoutPath = "/Login/Logout";
+  
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -35,18 +45,15 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
+app.UseAuthentication(); // Kimlik doðrulama middleware'i
+app.UseAuthorization();  // Yetkilendirme middleware'i
+
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-      name: "areas",
-      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-    );
-});
 
 app.Run();
