@@ -38,7 +38,7 @@ namespace OnlineEdu.WebUI.Controllers
             }
 
             TempData["SuccessMessage"] = "Kayıt işlemi başarıyla tamamlandı.";
-            return RedirectToAction("Index", "Login");
+            return RedirectToAction("SignIn", "Login");
         }
     }
 }

@@ -9,10 +9,8 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Teacher\Controllers\" />
     <Folder Include="Areas\Teacher\Data\" />
     <Folder Include="Areas\Teacher\Models\" />
-    <Folder Include="Areas\Teacher\Views\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,6 +33,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OnlineEdu.DataAccess\OnlineEdu.DataAccess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Areas\Teacher\Views\_ViewImports.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
