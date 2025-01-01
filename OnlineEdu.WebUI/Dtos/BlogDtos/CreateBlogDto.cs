@@ -16,6 +16,7 @@ namespace OnlineEdu.WebUI.Dtos.BlogDtos
         public DateTime BlogDate { get; set; }= DateTime.Now;   
 
         public int BlogCategoryId { get; set; }
-       
+        public int WriterId { get; set; }
+
     }
 }

@@ -78,7 +78,7 @@ namespace OnlineEdu.API.Controllers
         {
             var values=_courseService.TGetCoursesByTeacherId(id);
             var mappedValues=_mapper.Map<List<ResultCourseDto>>(values);
-            return Ok(values);
+            return Ok(mappedValues);
         }
 
     }
