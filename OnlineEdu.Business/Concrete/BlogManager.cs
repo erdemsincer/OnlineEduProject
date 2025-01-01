@@ -1,5 +1,6 @@
 ﻿using OnlineEdu.Business.Abstract;
 using OnlineEdu.DataAccess.Abstract;
+using OnlineEdu.DataAccess.Concrete;
 using OnlineEdu.Entity.Entities;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,11 @@ namespace OnlineEdu.Business.Concrete
         public List<Blog> GetBlogsWithCategories()
         {
             return _blogrepository.GetBlogsWithCategories();
+        }
+
+        public List<Blog> TGetBlogsWithCategoriesByWriterId(int id)
+        {
+            return _blogrepository.GetBlogsWithCategoriesByWriterId(id);
         }
     }
 }

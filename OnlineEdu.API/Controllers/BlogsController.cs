@@ -56,7 +56,7 @@ namespace OnlineEdu.API.Controllers
 
         public IActionResult GetBlogByWriterId(int id)
         {
-            var values=_blogService.TGetFilteredList(x=>x.WriterId==id);
+            var values=_blogService.TGetBlogsWithCategoriesByWriterId(id);
             var mappedValues=_mapper.Map<List<ResultBlogDto>>(values);
             return Ok(mappedValues);
         }
