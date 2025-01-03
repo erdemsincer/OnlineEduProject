@@ -28,6 +28,7 @@ namespace OnlineEdu.DataAccess.Context
         public DbSet<Subscriber> Subscribers { get; set; }
         public DbSet<Testimonial> Testimonials { get; set; }
         public DbSet<CourseRegister> CourseRegisters { get; set; }
+        public DbSet<TeacherSocial> TeacherSocials { get; set; }
 
     }
 }
