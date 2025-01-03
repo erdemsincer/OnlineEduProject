@@ -12,7 +12,7 @@ namespace OnlineEdu.API.Extensions
         {
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddScoped(typeof(IGenericService<>), typeof(GenericManager<>));
-
+        
             services.AddScoped<IBlogRepository, BlogRepository>();
             services.AddScoped<IBlogService, BlogManager>();
             services.AddScoped<ICourseCategoryRepository, CourseCategoryRepository>();

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using OnlineEdu.DataAccess.Context;
 using OnlineEdu.Entity.Entities;
+using OnlineEdu.WebUI.Mappings;
 using OnlineEdu.WebUI.Services;
 using OnlineEdu.WebUI.Services.RoleServices;
 using OnlineEdu.WebUI.Validators;
@@ -15,7 +16,7 @@ builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddIdentity<AppUser, AppRole>()
     .AddEntityFrameworkStores<OnlineEduContext>()
     .AddErrorDescriber<CustomErrorDescriber>();
-
+builder.Services.AddAutoMapper(typeof(GeneralMapping));
 builder.Services.AddHttpClient();
 builder.Services.AddControllersWithViews();
 
