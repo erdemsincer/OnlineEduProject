@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineEdu.Entity.Entities;
 using OnlineEdu.WebUI.Dtos.TeacherSocialDtos;
@@ -7,6 +8,7 @@ using OnlineEdu.WebUI.Helpers;
 namespace OnlineEdu.WebUI.Areas.Teacher.Controllers
 {
     [Area("Teacher")]
+    [Authorize(Roles = "Teacher")]
     public class MySocialMediaController : Controller
     {
         private readonly HttpClient _httpClient=HttpClientInstance.CreateClient();
@@ -25,19 +27,19 @@ namespace OnlineEdu.WebUI.Areas.Teacher.Controllers
             return View(values);
         }
         [HttpDelete]
-        public async Task<IActionResult> DeleteSocialMedia(int id)
+        public async Task<IActionResult> DeleteTeacherSocial(int id)
         {
             await _httpClient.DeleteAsync("teachersocials/" + id);
             return RedirectToAction("Index");
         }
         [HttpGet]
-        public async Task<IActionResult> UpdateSocialMedia(int id)
+        public async Task<IActionResult> UpdateTeacherSocial(int id)
         {
             var values = await _httpClient.GetFromJsonAsync<UpdateTeacherSocialDto>("teachersocials/"+id);
             return View(values);
         }
         [HttpPost]
-        public async Task<IActionResult> UpdateSocialMedia(UpdateTeacherSocialDto updateTeacherSocialDto)
+        public async Task<IActionResult> UpdateTeacherSocial(UpdateTeacherSocialDto updateTeacherSocialDto)
         {
            
             await _httpClient.PutAsJsonAsync("teachersocials", updateTeacherSocialDto);
