@@ -49,5 +49,13 @@ namespace OnlineEdu.API.Controllers
             _testimonialService.TUpdate(value);
             return Ok("Düzenlendi");
         }
+
+        [HttpGet("GetTestimonialCount")]
+
+        public IActionResult GetTestimonialCount()
+        {
+            var testimonialCount=_testimonialService.Tcount();
+            return Ok(testimonialCount);
+        }
     }
 }

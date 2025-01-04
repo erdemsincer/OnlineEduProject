@@ -19,7 +19,10 @@ namespace OnlineEdu.DataAccess.Concrete
             _onlineEduContext = _context;
         }
 
-        
+        public List<Blog> Get4LastBlogsWithCategories()
+        {
+            return _context.Blogs.Include(x=>x.BlogCategory).OrderByDescending(x=>x.BlogId).Take(4).ToList();
+        }
 
         public List<Blog> GetBlogsWithCategories()
         {
