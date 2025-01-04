@@ -14,6 +14,8 @@ namespace OnlineEdu.WebUI.Mappings
             CreateMap<AppRole, CreateRoleDto>().ReverseMap();
             CreateMap<AppRole, UpdateRoleDto>().ReverseMap();
             CreateMap<AppUser, ResultUserDto>().ReverseMap();
+            CreateMap<TeacherSocial, ResultTeacherSocialDto>().ReverseMap();
+
         }
     }
 }
