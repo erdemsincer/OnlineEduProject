@@ -33,17 +33,17 @@ namespace OnlineEdu.WebUI.Services
                 });
             }
 
-            var result= await _userManager.CreateAsync(user, userRegisterDto.Password);
+            var result = await _userManager.CreateAsync(user, userRegisterDto.Password);
 
-            if (!result.Succeeded)
+            // Kullanıcı başarıyla oluşturulduysa role atama yap
+            if (result.Succeeded)
             {
-                await _userManager.AddToRoleAsync(user,"Student");
-                return result;
+                await _userManager.AddToRoleAsync(user, "Student");
             }
+
             return result;
-
-
         }
+
 
         public Task<bool> CreateRoleAsync(UserRoleDto userRoleDto)
         {
