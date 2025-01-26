@@ -29,7 +29,7 @@ namespace OnlineEdu.DataAccess.Concrete
 
         public List<Course> GetAllCoursesWithCategories()
         {
-            return _context.Courses.Include(x=>x.CourseCategory).Include(x=>x.AppUser).ToList();
+            return _context.Courses.Include(x => x.CourseCategory).Include(x => x.AppUser).ToList();
         }
 
         public List<Course> GetAllCoursesWithCategories(Expression<Func<Course, bool>> filter = null)
