@@ -4,6 +4,7 @@ using OnlineEdu.Entity.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,6 +36,11 @@ namespace OnlineEdu.Business.Concrete
         public List<Course> TGetCoursesByTeacherId(int id)
         {
            return _courseRepository.GetCoursesByTeacherId(id);
+        }
+
+        public List<Course> TGetAllCoursesWithCategories(Expression<Func<Course, bool>> filter = null)
+        {
+            return _courseRepository.GetAllCoursesWithCategories(filter);
         }
     }
 }
