@@ -1,4 +1,4 @@
-﻿﻿
+﻿    ﻿
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/UILayout/Layout.cshtml";
@@ -50,6 +50,7 @@
                     </aside>
 
                     @await Component.InvokeAsync("_BlogCategoryList")
+                    @await Component.InvokeAsync("_BlogRecentBlogs")
 
 
                     <aside class="single_sidebar_widget instagram_feeds">
@@ -87,6 +88,7 @@
                             </li>
                         </ul>
                     </aside>
+                    @await Component.InvokeAsync("_BlogSubscribe")
                    
                 </div>
             </div>
