@@ -1,5 +1,4 @@
-﻿﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/UILayout/Layout.cshtml";
 }
@@ -23,7 +22,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-              
+                <iframe src="@ViewBag.map" width="1200" height="900" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
 
@@ -36,7 +35,6 @@
             </div>
             @await Component.InvokeAsync("_ContactSendMessage")
             @await Component.InvokeAsync("_ContactInfo")
-           
 
         </div>
     </div>
