@@ -45,6 +45,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseStatusCodePagesWithReExecute("/ErrorPage/NotFound404/"); // Hata sayfalarý middleware'i
 
 app.UseAuthentication(); // Kimlik doðrulama middleware'i
 app.UseAuthorization();  // Yetkilendirme middleware'i
