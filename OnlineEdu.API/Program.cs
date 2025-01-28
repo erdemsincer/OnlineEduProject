@@ -24,6 +24,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<OnlineEduContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection"));
+    options.UseLazyLoadingProxies();
 });
 var app = builder.Build();
 
