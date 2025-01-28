@@ -1,0 +1,83 @@
+﻿@model List<ResultSubscriberDto>
+
+@{
+    ViewData["Title"] = "Aboneler";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Aboneler</h2>
+
+    <!-- Başarı veya hata mesajı -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <table class="table table-hover mt-3">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Email</th>
+                <th>Durum</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Count > 0)
+            {
+                int count = 0;
+                foreach (var item in Model)
+                {
+                    count++;
+                    <tr>
+                        <td>@count</td>
+                        <td>@item.Email</td>
+                        <td>
+                            @if (item.IsActive)
+                            {
+                                <span class="badge bg-success px-3 py-2">Aktif</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-warning px-3 py-2 text-dark">Onay Bekliyor</span>
+                            }
+                        </td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <!-- Sil Butonu -->
+                                <form method="post" asp-action="DeleteSubscriber" asp-controller="Subscriber" asp-area="Admin">
+                                    <input type="hidden" name="id" value="@item.SubscriberId" />
+                                    <button type="submit" class="btn btn-danger btn-sm px-4">Sil</button>
+                                </form>
+
+                                <!-- Durum Değiştirme Butonu -->
+                                <form method="post" asp-action="ChangeStatusSubscriber" asp-controller="Subscriber" asp-area="Admin">
+                                    <input type="hidden" name="id" value="@item.SubscriberId" />
+                                    @if (item.IsActive)
+                                    {
+                                        <button type="submit" class="btn btn-secondary btn-sm px-4">İptal Et</button>
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" class="btn btn-success btn-sm px-4">Onayla</button>
+                                    }
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4" class="text-center">Hiç abone bulunamadı.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
