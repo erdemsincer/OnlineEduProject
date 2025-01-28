@@ -29,7 +29,8 @@ builder.Services.ConfigureApplicationCookie(cfg =>
 {
     cfg.LoginPath = "/Login/SignIn";
     cfg.LogoutPath = "/Login/Logout";
-  
+    cfg.AccessDeniedPath = "/ErrorPage/AccessDenied";   
+
 });
 
 var app = builder.Build();
