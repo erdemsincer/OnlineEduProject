@@ -89,9 +89,11 @@ namespace OnlineEdu.WebUI.Services
     
         }
 
-        public Task<bool> LogoutAsync()
+        public async Task LogoutAsync()
         {
-            throw new NotImplementedException();
+            await _signInManager.SignOutAsync();
+           
+
         }
 
         public async Task<List<AppUser>> GetAllUsersAsync()
