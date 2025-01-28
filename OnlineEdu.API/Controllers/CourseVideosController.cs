@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineEdu.Business.Abstract;
 using OnlineEdu.DTO.Dtos.CourseVideoDtos;
 using OnlineEdu.Entity.Entities;
+using System.Linq;
 
 namespace OnlineEdu.API.Controllers
 {
@@ -23,6 +24,15 @@ namespace OnlineEdu.API.Controllers
         public IActionResult Get()
         {
             var values = _courseVideoService.TGetList();
+            var mappedValues = _mapper.Map<List<ResultCourseVideoDto>>(values);
+            return Ok(mappedValues);
+        }
+
+        [HttpGet("GetCourseVideosByCourseId/{id}")]
+        public IActionResult GetCourseVideosByCourseId(int id)
+        {
+            var values = _courseVideoService.TGetFilteredList(x => x.CourseId == id);
+          
             return Ok(values);
         }
 
@@ -33,7 +43,8 @@ namespace OnlineEdu.API.Controllers
             if (value == null)
                 return NotFound("Kurs videosu bulunamadı.");
 
-            return Ok(value);
+            var mappedValue = _mapper.Map<ResultCourseVideoDto>(value);
+            return Ok(mappedValue);
         }
 
         [HttpPost]
@@ -44,7 +55,7 @@ namespace OnlineEdu.API.Controllers
 
             var newValue = _mapper.Map<CourseVideo>(createCourseVideoDto);
             _courseVideoService.TCreate(newValue);
-            return Ok("Kurs videosu eklendi.");
+            return Ok(new { message = "Kurs videosu eklendi.", id = newValue.CourseId });
         }
 
         [HttpDelete("{id}")]
