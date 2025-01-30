@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OnlineEdu.DataAccess\OnlineEdu.DataAccess.csproj" />
+    <ProjectReference Include="..\OnlineEdu.DTO\OnlineEdu.DTO.csproj" />
   </ItemGroup>
 
 </Project>
