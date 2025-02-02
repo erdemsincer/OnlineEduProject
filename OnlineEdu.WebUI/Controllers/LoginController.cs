@@ -13,8 +13,12 @@ namespace OnlineEdu.WebUI.Controllers
 {
     public class LoginController : Controller
     {
-       private readonly HttpClient _httpClient=HttpClientInstance.CreateClient();
+        private readonly HttpClient _httpClient;
 
+        public LoginController(IHttpClientFactory clientFactory)
+        {
+            _httpClient = clientFactory.CreateClient("EduClient");
+        }
         [HttpGet]
         public IActionResult SignIn()
         {
@@ -39,7 +43,7 @@ namespace OnlineEdu.WebUI.Controllers
                 var claimsIdentity = new ClaimsIdentity(claims, JwtBearerDefaults.AuthenticationScheme);
                 var authProps = new AuthenticationProperties
                 {
-                    ExpiresUtc = response.ExpireDate
+                    ExpiresUtc = response.ExpireDate,
                     IsPersistent = true
                 };
                 await HttpContext.SignInAsync(JwtBearerDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProps);

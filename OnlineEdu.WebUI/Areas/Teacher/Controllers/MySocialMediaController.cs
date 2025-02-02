@@ -12,13 +12,13 @@ namespace OnlineEdu.WebUI.Areas.Teacher.Controllers
     [Authorize(Roles = "Teacher")]
     public class MySocialMediaController : Controller
     {
-        private readonly HttpClient _httpClient=HttpClientInstance.CreateClient();
+        private readonly HttpClient _httpClient;
 
         private readonly ITokenService _tokenService;
 
-        public MySocialMediaController( ITokenService tokenService)
+        public MySocialMediaController( ITokenService tokenService, IHttpClientFactory clientFactory)
         {
-    
+            _httpClient = clientFactory.CreateClient("EduClient");
             _tokenService = tokenService;
         }
 

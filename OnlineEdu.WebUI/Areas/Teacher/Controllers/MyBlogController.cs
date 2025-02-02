@@ -12,13 +12,13 @@ namespace OnlineEdu.WebUI.Areas.Teacher.Controllers
     [Area("Teacher")]
     public class MyBlogController : Controller
     {
-        private readonly HttpClient _httpClient=HttpClientInstance.CreateClient();
+        private readonly HttpClient _httpClient;
        
         private readonly ITokenService _tokenService;
 
-        public MyBlogController( ITokenService tokenService)
+        public MyBlogController( ITokenService tokenService, IHttpClientFactory clientFactory)
         {
-           
+            _httpClient = clientFactory.CreateClient("EduClient");
             _tokenService = tokenService;
         }
         public async Task BlogCategoryDropDownAsync()

@@ -7,7 +7,14 @@ namespace OnlineEdu.WebUI.ViewComponents.Blog
 {
     public class _BlogCategoryList:ViewComponent
     {
-        private readonly HttpClient _httpClient=HttpClientInstance.CreateClient();
+        private readonly HttpClient _httpClient;
+
+
+        public _BlogCategoryList(IHttpClientFactory clientFactory)
+        {
+            _httpClient = clientFactory.CreateClient("EduClient");
+
+        }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {

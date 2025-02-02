@@ -22,10 +22,10 @@ namespace OnlineEdu.WebUI.Areas.Student.Controllers
         private readonly ITokenService _tokenService;
     
 
-        public CourseRegisterController( ITokenService tokenService)
+        public CourseRegisterController( ITokenService tokenService, IHttpClientFactory clientFactory)
         {
-     
-            _client = HttpClientInstance.CreateClient();
+
+            _client = clientFactory.CreateClient("EduClient");
             _tokenService = tokenService;
         }
 
