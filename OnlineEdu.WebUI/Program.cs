@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using OnlineEdu.DataAccess.Context;
 using OnlineEdu.Entity.Entities;
@@ -20,10 +21,19 @@ builder.Services.AddAutoMapper(typeof(GeneralMapping));
 builder.Services.AddHttpClient();
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<OnlineEduContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection"));
-});
+
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddCookie(
+    JwtBearerDefaults.AuthenticationScheme, opt =>
+    {
+        opt.LoginPath = "/Login/SignIn";
+        opt.LogoutPath = "/Login/Logout";
+        opt.AccessDeniedPath = "/ErrorPage/AccessDenied";
+        opt.Cookie.SameSite=SameSiteMode.Strict;
+        opt.Cookie.HttpOnly = true;
+        opt.Cookie.SecurePolicy=CookieSecurePolicy.SameAsRequest;
+        opt.Cookie.Name = "OnlineEduJwt";
+    });
 
 builder.Services.ConfigureApplicationCookie(cfg =>
 {

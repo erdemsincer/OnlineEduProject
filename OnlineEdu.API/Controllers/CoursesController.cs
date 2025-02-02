@@ -69,7 +69,7 @@ namespace OnlineEdu.API.Controllers
 
         public IActionResult GetActiveCourse()
         {
-            var values =_courseService.TGetFilteredList(x=>x.IsShown==true);
+            var values = _courseService.TGetFilteredList(x => x.IsShown == true);
             return Ok(values);
         }
 
