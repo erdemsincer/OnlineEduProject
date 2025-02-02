@@ -13,7 +13,6 @@
     <Folder Include="Areas\Student\Models\" />
     <Folder Include="Areas\Teacher\Data\" />
     <Folder Include="Areas\Teacher\Models\" />
-    <Folder Include="Dtos\LoginDtos\" />
   </ItemGroup>
 
   <ItemGroup>
