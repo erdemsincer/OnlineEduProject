@@ -7,6 +7,7 @@ using OnlineEdu.WebUI.Dtos.CourseCategoryDtos;
 using OnlineEdu.WebUI.Dtos.CourseDtos;
 using OnlineEdu.WebUI.Dtos.CourseVideoDtos;
 using OnlineEdu.WebUI.Helpers;
+using OnlineEdu.WebUI.Services.TokenServices;
 
 namespace OnlineEdu.WebUI.Areas.Teacher.Controllers
 {
@@ -15,17 +16,20 @@ namespace OnlineEdu.WebUI.Areas.Teacher.Controllers
     public class MyCourseController : Controller
     {
         private readonly HttpClient _client = HttpClientInstance.CreateClient();
-        private readonly UserManager<AppUser> _userManager;
 
-        public MyCourseController(UserManager<AppUser> userManager)
+        private readonly ITokenService _tokenService;
+
+        public MyCourseController(ITokenService tokenService)
         {
-            _userManager = userManager;
+       
+            _tokenService = tokenService;   
+
         }
 
         public async Task<IActionResult> Index()
         {
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            var values = await _client.GetFromJsonAsync<List<ResultCourseDto>>($"Courses/GetCourseByTeacherId/{user.Id}");
+            var userId = _tokenService.GetUserId;
+            var values = await _client.GetFromJsonAsync<List<ResultCourseDto>>($"Courses/GetCourseByTeacherId/{userId}");
             return View(values);
         }
 
@@ -44,8 +48,8 @@ namespace OnlineEdu.WebUI.Areas.Teacher.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCourse(CreateCourseDto createCourseDto)
         {
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            createCourseDto.AppUserId = user.Id;
+            var userId = _tokenService.GetUserId;
+            createCourseDto.AppUserId = userId;
             createCourseDto.IsShown = false;
 
             await _client.PostAsJsonAsync("courses", createCourseDto);
@@ -68,8 +72,8 @@ namespace OnlineEdu.WebUI.Areas.Teacher.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateCourse(UpdateCourseDto updateCourseDto)
         {
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            updateCourseDto.AppUserId = user.Id;
+            var userId = _tokenService.GetUserId;
+            updateCourseDto.AppUserId = userId;
             await _client.PutAsJsonAsync("courses", updateCourseDto);
             return RedirectToAction("Index");
         }

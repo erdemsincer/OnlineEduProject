@@ -10,6 +10,7 @@ using OnlineEdu.WebUI.Helpers;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using OnlineEdu.WebUI.Services.TokenServices;
 
 namespace OnlineEdu.WebUI.Areas.Student.Controllers
 {
@@ -18,18 +19,21 @@ namespace OnlineEdu.WebUI.Areas.Student.Controllers
     public class CourseRegisterController : Controller
     {
         private readonly HttpClient _client;
-        private readonly UserManager<AppUser> _userManager;
+        private readonly ITokenService _tokenService;
+    
 
-        public CourseRegisterController(UserManager<AppUser> userManager)
+        public CourseRegisterController( ITokenService tokenService)
         {
-            _userManager = userManager;
+     
             _client = HttpClientInstance.CreateClient();
+            _tokenService = tokenService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            var values = await _client.GetFromJsonAsync<List<ResultCourseRegisterDto>>("courseRegister/GetMyCourses/" + user.Id);
+            var userId = _tokenService.GetUserId;
+           
+            var values = await _client.GetFromJsonAsync<List<ResultCourseRegisterDto>>("courseRegister/GetMyCourses/" + userId);
             return View(values);
         }
 
@@ -58,8 +62,8 @@ namespace OnlineEdu.WebUI.Areas.Student.Controllers
                 Value = x.CourseId.ToString()
             }).ToList();
 
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            createCourseRegisterDto.AppUserId = user.Id;
+            var userId = _tokenService.GetUserId;
+            createCourseRegisterDto.AppUserId = userId;
             var result = await _client.PostAsJsonAsync("courseregister", createCourseRegisterDto);
 
             if (result.IsSuccessStatusCode)

@@ -5,6 +5,7 @@ using OnlineEdu.Entity.Entities;
 using OnlineEdu.WebUI.Dtos.BlogCategoryDtos;
 using OnlineEdu.WebUI.Dtos.BlogDtos;
 using OnlineEdu.WebUI.Helpers;
+using OnlineEdu.WebUI.Services.TokenServices;
 
 namespace OnlineEdu.WebUI.Areas.Teacher.Controllers
 {
@@ -12,12 +13,13 @@ namespace OnlineEdu.WebUI.Areas.Teacher.Controllers
     public class MyBlogController : Controller
     {
         private readonly HttpClient _httpClient=HttpClientInstance.CreateClient();
-        private readonly UserManager<AppUser> _userManager;
+       
+        private readonly ITokenService _tokenService;
 
-        public MyBlogController(UserManager<AppUser> userManager)
+        public MyBlogController( ITokenService tokenService)
         {
-            _userManager = userManager;
-            
+           
+            _tokenService = tokenService;
         }
         public async Task BlogCategoryDropDownAsync()
         {
@@ -34,8 +36,8 @@ namespace OnlineEdu.WebUI.Areas.Teacher.Controllers
 
         public async Task< IActionResult> Index()
         {
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            var values = await _httpClient.GetFromJsonAsync<List<ResultBlogDto>>("blogs/GetBlogByWriterId/" + user.Id);
+            var userId = _tokenService.GetUserId;
+            var values = await _httpClient.GetFromJsonAsync<List<ResultBlogDto>>("blogs/GetBlogByWriterId/" + userId);
             return View(values);
         }
         [HttpGet]
@@ -47,8 +49,8 @@ namespace OnlineEdu.WebUI.Areas.Teacher.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBlog(CreateBlogDto createBlogDto)
         {
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            createBlogDto.WriterId = user.Id;
+            var userId = _tokenService.GetUserId;
+            createBlogDto.WriterId = userId;
             await _httpClient.PostAsJsonAsync("blogs", createBlogDto);
             return RedirectToAction("Index");
 
@@ -64,8 +66,8 @@ namespace OnlineEdu.WebUI.Areas.Teacher.Controllers
 
         public async Task<IActionResult> UpdateBlog(UpdateBlogDto updateBlogDto)
         {
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            updateBlogDto.WriterId = user.Id;
+            var userId = _tokenService.GetUserId;
+            updateBlogDto.WriterId = userId;
             await _httpClient.PutAsJsonAsync("blogs",updateBlogDto);
             return RedirectToAction("Index");
 
